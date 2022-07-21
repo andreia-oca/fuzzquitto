@@ -66,12 +66,14 @@ void handle_sigusr1(int signal)
 #endif
 }
 
-/* Signal handler for SIGUSR2 - print subscription / retained tree. */
+void __gcov_flush();
+
+/* Signal handler for SIGUSR2 - dump code coverage information during execution */
 void handle_sigusr2(int signal)
 {
 	UNUSED(signal);
 
-	flag_tree_print = true;
+	__gcov_flush(); 
 }
 
 /*
