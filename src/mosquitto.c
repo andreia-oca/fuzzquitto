@@ -41,6 +41,7 @@ Contributors:
 #include <signal.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #ifdef WITH_SYSTEMD
 #  include <systemd/sd-daemon.h>
 #endif
@@ -55,6 +56,7 @@ Contributors:
 #include "memory_mosq.h"
 #include "misc_mosq.h"
 #include "util_mosq.h"
+
 
 struct mosquitto_db db;
 
@@ -434,7 +436,6 @@ static int pid__write(void)
 	}
 	return MOSQ_ERR_SUCCESS;
 }
-
 
 int main(int argc, char *argv[])
 {

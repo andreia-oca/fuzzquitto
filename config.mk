@@ -73,7 +73,7 @@ WITH_WEBSOCKETS:=no
 WITH_EC:=yes
 
 # Build man page documentation by default.
-WITH_DOCS:=yes
+WITH_DOCS:=no
 
 # Build with client support for SOCK5 proxy.
 WITH_SOCKS:=yes
@@ -102,7 +102,7 @@ WITH_EPOLL:=yes
 WITH_BUNDLED_DEPS:=yes
 
 # Build with coverage options
-WITH_COVERAGE:=no
+WITH_COVERAGE:=yes
 
 # Build with unix domain socket support
 WITH_UNIX_SOCKETS:=yes
