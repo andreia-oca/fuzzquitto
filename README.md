@@ -78,6 +78,27 @@ already be built. Use `make binary` to skip building the man pages, or install
 
 Equivalent options for enabling/disabling features are available when using the CMake build.
 
+## Fuzzing
+For fuzzing, I have tweaked the following configs:
+```bash
+WITH_DOCS := no               # no need for man pages
+WITH_COVERAGE := yes          # adds gcov support
+WITH_TLS := no                # its easier to find "juicy" paths if we bypass authentication
+WITH_STATIC_LIBRARIES := yes  # For ASan https://github.com/google/sanitizers/issues/89  
+```
+
+Furthermore, I configured the signal `SIGUSR2` to forcefully dump coverage information during runtime:
+```bash
+kill -SIGUSR2 $(pidof mosquitto)
+```
+
+In order to fuzz Mosquitto, you have to (1) compile it with AFL instrumentation and (2) enable ASan.
+```bash
+export AFL_USE_ASAN=1
+CFLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer" LDFLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer" CC=afl-gcc make clean all
+```
+
+*Note:* ASan allocates lots of virtual memory and that might cause AFL to crash (see details [here](https://afl-1.readthedocs.io/en/latest/notes_for_asan.html)). Proceed with care with using `afl-fuzz -m none`.
 
 ## Credits
 
