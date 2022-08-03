@@ -57,5 +57,5 @@ docker build -t fuzzquito:latest  .
 ## Run
 Run a container using the new image:
 ```
-docker run -it --name fuzquitto_test -p 1883:1883 -v ./mosquitto.conf:/mosquitto/config/mosquitto.conf -v /mosquitto/data -v /mosquitto/log fuzzquito:latest 
+docker run -it --name fuzquitto_test -p 1883:1883 -v /home/mosquitto/fuzzquitto/data -v /home/mosquitto/fuzzquitto/log fuzzquito:latest 
 ```
