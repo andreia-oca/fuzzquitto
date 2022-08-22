@@ -23,7 +23,8 @@ RUN python3 -m pip install gcovr
 
 # Packages used for debugging (thiese are optional in a prod env)
 # If you are using this container for debugging uncomment the line below
-RUN apt-get -y install curl wget vim tmux net-tools host
+RUN apt-get -y install curl wget vim tmux net-tools host netcat
+
 # Also for debugging purposes install sudo 
 RUN apt-get -y install sudo
 
@@ -43,7 +44,8 @@ WORKDIR /home/${USER}
 # Clone and compile (minimal) Fuzzquitto with ASan
 RUN git clone https://github.com/andreia-oca/fuzzquitto.git && \
     cd fuzzquitto && \
-    CFLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer" LDFLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer" make clean all
+    CFLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer" LDFLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer" \
+    make clean all WITH_TLS=no WITH_STATIC_LIBRARIES=yes WITH_COVERAGE=yes
 
 RUN mkdir -p ./fuzzquitto/config ./fuzzquitto/data ./fuzzquitto/log
 
